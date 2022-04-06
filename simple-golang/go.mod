@@ -1,8 +1,12 @@
-module sample-go
+module simple-golang
 
 go 1.17
 
-require github.com/gin-gonic/gin v1.7.7
+require (
+	github.com/gin-gonic/gin v1.7.7
+	gorm.io/driver/postgres v1.3.3
+	gorm.io/gorm v1.23.4
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -30,6 +34,4 @@ require (
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
-	gorm.io/driver/postgres v1.3.3 // indirect
-	gorm.io/gorm v1.23.4 // indirect
 )
