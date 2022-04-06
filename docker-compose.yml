@@ -35,7 +35,7 @@ services:
 
   server:
     build:
-      context: .
+      context: ./simple-golang
       dockerfile: Dockerfile
     depends_on:
       - database
