@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  database:
+    image: postgres:alpine
+    restart: unless-stopped
+    container_name: db_postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_HOST=${DB_HOST}
+    ports:
+      - "5432"
+    volumes:
+      - ./sql/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - ./enigma:/var/lib/postgresql/data
+    networks:
+      - my-network
+
+  fe:
+    image: todos:latest
+    build:
+      context: ./simple-todos
+      dockerfile: dockerfile
+    ports:
+      - "82:82"
+    restart:
+       always
+    networks: 
+      - my-network
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    env_file:
+      - .env
+    networks:
+      - my-network
+    ports:
+      - "${API_PORT}:${API_PORT}"
+volumes:
+  enigma:
+
+networks:
+  my-network:
+    external: true
